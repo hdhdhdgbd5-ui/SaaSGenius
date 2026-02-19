@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaSGenius - SaaS Boilerplate Generator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0891b2, #3b82f6); min-height: 100vh; color: white; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 40px 0; }
+        .header h1 { font-size: 3em; margin-bottom: 10px; }
+        .card { background: white; color: #1f2937; border-radius: 20px; padding: 40px; margin: 20px 0; }
+        .feature { display: flex; align-items: center; padding: 15px; margin: 10px 0; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #3b82f6; }
+        .feature-check { color: #3b82f6; font-size: 1.3em; margin-right: 15px; }
+        .btn { background: linear-gradient(135deg, #0891b2, #3b82f6); color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 1em; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .hidden { display: none !important; }
+        .stack-option { border: 2px solid #e5e7eb; border-radius: 10px; padding: 20px; margin: 10px 0; cursor: pointer; transition: all 0.3s; }
+        .stack-option:hover, .stack-option.selected { border-color: #3b82f6; background: #f0f9ff; }
+        .code-block { background: #1f2937; color: #e5e7eb; padding: 20px; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 0.9em; overflow-x: auto; margin: 15px 0; }
+        .price-tag { background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; }
+        .preview-window { background: #f9fafb; border: 2px solid #e5e7eb; border-radius: 12px; overflow: hidden; margin: 20px 0; }
+        .preview-header { background: #1f2937; color: white; padding: 10px 20px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="font-size: 4em;">⚡</div>
+            <h1>SaaSGenius</h1>
+            <p>Generate Production-Ready SaaS Apps in Minutes</p>
+        </div>
+
+        <!-- Builder Form -->
+        <div id="builderSection" class="card">
+            <h2 style="text-align: center; margin-bottom: 30px;">Configure Your SaaS</h2>
+
+            <div style="margin: 20px 0;">
+                <label>What are you building?</label>
+                <input type="text" id="appName" class="feature" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1em; margin-top: 10px;" placeholder="e.g., TaskMaster Pro, InvoiceGen, CRM Dashboard">
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label>Select Tech Stack:</label>
+                
+                <div class="stack-option selected" onclick="selectStack(this, 'nextjs')">
+                    <strong>Next.js + Prisma + PostgreSQL</strong><br>
+                    <span style="color: #6b7280; font-size: 0.9em;">Best for scalable SaaS with SEO needs</span>
+                </div>
+                
+                <div class="stack-option" onclick="selectStack(this, 'react')">
+                    <strong>React + Node + MongoDB</strong><br>
+                    <span style="color: #6b7280; font-size: 0.9em;">Fastest to build, great for MVPs</span>
+                </div>
+                
+                <div class="stack-option" onclick="selectStack(this, 'vue')">
+                    <strong>Vue + Firebase</strong><br>
+                    <span style="color: #6b7280; font-size: 0.9em;">Simplest setup, great for beginners</span>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label>Features to Include:</label>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-top: 15px;">
+                    <label style="display: flex; align-items: center; padding: 10px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="margin-right: 10px;"> User Authentication
+                    </label>
+                    
+                    <label style="display: flex; align-items: center; padding: 10px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="margin-right: 10px;"> Stripe Payments
+                    </label>
+                    
+                    <label style="display: flex; align-items: center; padding: 10px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                        <input type="checkbox" style="margin-right: 10px;"> Team/Organization Support
+                    </label>
+                    
+                    <label style="display: flex; align-items: center; padding: 10px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="margin-right: 10px;"> Admin Dashboard
+                    </label>
+                    
+                    <label style="display: flex; align-items: center; padding: 10px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                        <input type="checkbox" style="margin-right: 10px;"> API with Documentation
+                    </label>
+                    
+                    <label style="display: flex; align-items: center; padding: 10px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="margin-right: 10px;"> Email Notifications
+                    </label>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn" onclick="generateSaaS()">🚀 Generate My SaaS</button>
+            </div>
+        </div>
+
+        <!-- Generated Preview -->
+        <div id="previewSection" class="hidden">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                    <button class="btn" onclick="reset()" style="font-size: 0.9em;">← New Project</button>
+                    <h2>Your Generated SaaS</h2>
+                </div>
+
+                <div class="preview-window">
+                    <div class="preview-header">🖥️ App Preview</div>
+                    
+                    <div style="padding: 40px; background: white;">
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <h3 id="previewAppName" style="font-size: 2em; color: #3b82f6;">TaskMaster Pro</h3>
+                            <p style="color: #6b7280;">Streamline your workflow with AI-powered task management</p>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; gap: 15px; margin: 30px 0;">
+                            <button style="background: #3b82f6; color: white; padding: 12px 30px; border: none; border-radius: 8px; cursor: pointer;">Get Started</button>
+                            <button style="background: white; color: #3b82f6; padding: 12px 30px; border: 2px solid #3b82f6; border-radius: 8px; cursor: pointer;">View Demo</button>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; text-align: center;">
+                            <div><strong>✓ Auth</strong></div>
+                            <div><strong>✓ Payments</strong></div>
+                            <div><strong>✓ Dashboard</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h3>📁 Generated Files</h3>
+                    
+                    <div class="code-block">
+                        📦 your-saas/
+┣━ 📁 app/
+┃  ┣━ 📄 page.tsx (Landing page with auth)
+┃  ┣━ 📄 dashboard/page.tsx (User dashboard)
+┃  ┗━ 📄 api/
+┣━ 📁 components/
+┃  ┣━ 📄 Auth.tsx (Magic link auth)
+┃  ┣━ 📄 Pricing.tsx (Stripe integration)
+┃  ┗━ 📄 Dashboard.tsx (Analytics UI)
+┣━ 📁 lib/
+┃  ┣━ 📄 prisma.ts (Database)
+┃  ┗━ 📄 stripe.ts (Payments)
+┣━ 📄 docker-compose.yml
+┗━ 📄 README.md (Deployment guide)
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <span class="feature-check">✓</span>
+                    <div>
+                        <strong>Authentication Ready</strong><br>
+                        Magic link + OAuth (Google, GitHub) configured
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <span class="feature-check">✓</span>
+                    <div>
+                        <strong>Stripe Payments</strong><br>
+                        Subscription + one-time payment webhooks included
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <span class="feature-check">✓</span>
+                    <div>
+                        <strong>Database + ORM</strong><br>
+                        Prisma schema with users, subscriptions, and your data models
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <span class="feature-check">✓</span>
+                    <div>
+                        <strong>Deploy to Production</strong><br>
+                        Vercel + Railway + Supabase configuration files included
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #0891b2, #3b82f6); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px;">
+                    <h3>Download Your SaaS Boilerplate</h3>
+                    
+                    <p style="margin: 15px 0;">✓ Complete codebase (5,000+ lines)</p>
+                    <p style="margin: 15px 0;">✓ Documentation & deployment guides</p>
+                    <p style="margin: 15px 0;">✓ Lifetime updates</p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 30px 0;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px 30px; border-radius: 8px;">
+                            <div style="font-size: 1.5em; font-weight: bold;">$149</div>
+                            <div style="font-size: 0.9em;">One-time</div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.3); padding: 15px 30px; border-radius: 8px;">
+                            <div style="font-size: 1.5em; font-weight: bold;">$49</div>
+                            <div style="font-size: 0.9em;">Starter (basic features)</div>
+                        </div>
+                    </div>
+                    
+                    <button style="background: white; color: #0891b2; padding: 15px 40px; border: none; border-radius: 10px; font-size: 1.1em; cursor: pointer; font-weight: bold;">
+                        Get Complete Code →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; opacity: 0.9;">
+            <p>SaaSGenius © 2024 • Built by Angel Army</p>
+        </div>
+    </div>
+
+    <script>
+        function selectStack(el, stack) {
+            document.querySelectorAll('.stack-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function generateSaaS() {
+            const appName = document.getElementById('appName').value || 'MySaaS';
+            
+            document.getElementById('builderSection').classList.add('hidden');
+            document.getElementById('previewSection').classList.remove('hidden');
+            
+            document.getElementById('previewAppName').textContent = appName;
+        }
+
+        function reset() {
+            document.getElementById('previewSection').classList.add('hidden');
+            document.getElementById('builderSection').classList.remove('hidden');
+            document.getElementById('appName').value = '';
+        }
+    </script>
+</body>
+</html>
